@@ -15,6 +15,10 @@ public:
     explicit mainWidget(QWidget *parent = nullptr);
     ~mainWidget();
 
+private slots:
+
+    void on_btnSync_clicked();
+
 private:
     Ui::mainWidget *ui;
 };

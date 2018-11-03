@@ -25,16 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        mainwidget.cpp
+    main.cpp \
+    mainwidget.cpp \
+    Tools/filereader.cpp
 
 HEADERS += \
-        mainwidget.h
+        mainwidget.h \
+    Tools/filereader.h
 
 FORMS += \
-        mainwidget.ui
+        mainwidget.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+SUBDIRS += \
+    FileSync.pro
