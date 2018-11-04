@@ -21,4 +21,5 @@ void mainWidget::on_btnSync_clicked()
 {
     Filereader read;
     qDebug() << read.getOrigin() + " " + read.getDestination();
+    read.copyFromOrigin();
 }

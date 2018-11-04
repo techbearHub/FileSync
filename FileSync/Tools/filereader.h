@@ -16,6 +16,7 @@ public:
     Filereader();
     QString getOrigin();
     QString getDestination();
+    void copyFromOrigin();
 
 private:
 
