@@ -2,6 +2,7 @@
 #define FILEREADER_H
 
 #include <QWidget>
+#include <QDir>
 
 namespace Ui {
 class Filereader;
@@ -17,6 +18,7 @@ public:
     QString getDestination();
 
 private:
+
 
 };
 
