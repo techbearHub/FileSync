@@ -27,10 +27,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwidget.cpp \
+    Tools/fileCopier.cpp \
     Tools/filereader.cpp
 
 HEADERS += \
         mainwidget.h \
+    Tools/fileCopier.h \
     Tools/filereader.h
 
 FORMS += \

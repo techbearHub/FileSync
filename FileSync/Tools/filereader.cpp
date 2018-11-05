@@ -1,59 +1,39 @@
 #include "filereader.h"
-#include <QWidget>
-#include <QDir>
-#include <QFileInfoList>
-#include <QFile>
+#include <QCryptographicHash>
+//Checks if two files are the same
+//gets hash of files and compares it
 
-#include <QDebug>
-
-#define ORIGIN "C:/Documents/tests/FileSync/CP/FROM"
-#define DESTINATION "C:/Documents/tests/FileSync/CP/TO"
-
-Filereader::Filereader()
+fileReader::fileReader(QWidget *parent) : QWidget(parent)
 {
 
 }
 
-QString Filereader::getOrigin()
+bool fileReader::areFilesEqual(QString origin, QString newCopy)
 {
-    QDir orig(ORIGIN);
 
-    QFileInfoList file = orig.entryInfoList();
-    if(orig.exists()){
-        for(int i = 0; i < file.size(); i++){
-            qDebug() << "it works- " << file.at(i).filePath() + "//"+file.at(i).fileName();
-        }
-
+    QByteArray origSig = getFileHash(origin);
+    QByteArray newSig = getFileHash(newCopy);
+    if(origSig==newSig){
+        return true;
+    }else{
+        return false;
     }
 
-    return ORIGIN;
+
 }
 
-QString Filereader::getDestination()
+QByteArray fileReader::getFileHash(QString filePath)
 {
-    QDir dest(DESTINATION);
-    if(dest.exists()){
-        qDebug() << "it works- " << dest.path();
+    QFile file(filePath);
+    QCryptographicHash hash( QCryptographicHash::Sha1 );
+
+    if (file.open( QIODevice::ReadOnly)){
+        hash.addData( file.readAll() );
+    } else{
+        //TODO do we need to handle?
     }
 
-    return DESTINATION;
+    // Retrieve the SHA1 signature of the file
+    QByteArray sig = hash.result();
+    return sig;
 }
-
-void Filereader::copyFromOrigin()
-{
-    QDir orig(ORIGIN);
-    QDir dest(DESTINATION);
-    QFile fileOper;
-
-    QFileInfoList file = orig.entryInfoList();
-    if(orig.exists()){
-        for(int i = 0; i < file.size(); i++){
-            QFile::copy(orig.path()+ "/" + file.at(i).fileName(), dest.path() + "/" + file.at(i).fileName());
-        }
-
-    }
-}
-
-
-
-

@@ -1,25 +1,25 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
-
 #include <QWidget>
-#include <QDir>
+#include <QFile>
 
-namespace Ui {
-class Filereader;
-}
 
-class Filereader:public QWidget
+class fileReader : public QWidget
 {
     Q_OBJECT
+public:
+    explicit fileReader(QWidget *parent = nullptr);
+
+signals:
+
+public slots:
+
 
 public:
-    Filereader();
-    QString getOrigin();
-    QString getDestination();
-    void copyFromOrigin();
+    bool areFilesEqual(QString origin, QString newCopy);
 
 private:
-
+    QByteArray getFileHash(QString filePath);
 
 };
 
