@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QFile>
+#include "filereader.h"
 
 #include <QDebug>
 
@@ -34,6 +35,7 @@ void fileCopier::copyFromOrigin()
     QString newFile = DESTINATION;
 
     QFileInfoList file = orig.entryInfoList();
+    fileReader reader;
     if(orig.exists() && dest.exists()){
 
         for(int i = 0; i < file.size(); i++){
@@ -45,6 +47,10 @@ void fileCopier::copyFromOrigin()
 
             if(QFile(newFile).exists()){
                 //TODO check hash and copy then
+                if(!reader.areFilesEqual(ogFile,newFile)){
+                    QFile::remove(newFile);
+                    QFile::copy(ogFile, newFile);
+                }
 
             }else{
                 QFile::copy(ogFile, newFile);
