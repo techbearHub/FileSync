@@ -4,6 +4,9 @@
 
 #include <QDebug>
 
+#define ORIGIN "C:/Documents/tests/FileSync/CP/FROM/"
+#define DESTINATION "C:/Documents/tests/FileSync/CP/TO/"
+
 mainWidget::mainWidget(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::mainWidget)
@@ -21,5 +24,5 @@ void mainWidget::on_btnSync_clicked()
 {
     fileCopier read;
 //    qDebug() << read.getOrigin() + " " + read.getDestination();
-    read.copyFromOrigin();
+    read.copyFromOrigin(ORIGIN, DESTINATION);
 }

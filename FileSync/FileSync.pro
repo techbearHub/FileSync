@@ -28,15 +28,18 @@ SOURCES += \
     main.cpp \
     mainwidget.cpp \
     Tools/fileCopier.cpp \
-    Tools/filereader.cpp
+    Tools/filereader.cpp \
+    Widgets/topmenu.cpp
 
 HEADERS += \
         mainwidget.h \
     Tools/fileCopier.h \
-    Tools/filereader.h
+    Tools/filereader.h \
+    Widgets/topmenu.h
 
 FORMS += \
         mainwidget.ui \
+    Widgets/topmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

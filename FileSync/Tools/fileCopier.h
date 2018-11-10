@@ -14,9 +14,7 @@ class fileCopier:public QWidget
 
 public:
     fileCopier();
-    QString getOrigin();
-    QString getDestination();
-    void copyFromOrigin();
+    void copyFromOrigin(QString ogDest, QString ogFile);
 
 private:
 

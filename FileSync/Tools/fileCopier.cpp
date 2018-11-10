@@ -15,38 +15,33 @@ fileCopier::fileCopier()
 
 }
 
-QString fileCopier::getOrigin()
+void fileCopier::copyFromOrigin(QString ogDest, QString newDest)
 {
-    return ORIGIN;
-}
-
-QString fileCopier::getDestination()
-{
-    return DESTINATION;
-}
-
-void fileCopier::copyFromOrigin()
-{
-    QDir orig(ORIGIN);
-    QDir dest(DESTINATION);
+    QDir orig(ogDest);
+    QDir dest(newDest);
     QFile fileOper;
 
-    QString ogFile = ORIGIN;
-    QString newFile = DESTINATION;
+    QString ogFile = ogDest;
+    QString newFile = newDest;
 
     QFileInfoList file = orig.entryInfoList();
     fileReader reader;
+    if(!dest.exists()){
+        dest.mkdir(dest.path());
+    }
+
     if(orig.exists() && dest.exists()){
 
         for(int i = 0; i < file.size(); i++){
-            //TODO check if file.size() gives what we need
             ogFile+=file.at(i).fileName();
             newFile+=file.at(i).fileName();
+
+//            if()
+
             qDebug() << ogFile;
             qDebug() << newFile;
 
             if(QFile(newFile).exists()){
-                //TODO check hash and copy then
                 if(!reader.areFilesEqual(ogFile,newFile)){
                     QFile::remove(newFile);
                     QFile::copy(ogFile, newFile);
