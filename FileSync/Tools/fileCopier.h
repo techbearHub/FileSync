@@ -16,7 +16,13 @@ public:
     fileCopier();
     void copyFromOrigin(QString ogDest, QString ogFile);
 
+signals:
+    void currentCopy(QString current, bool done);
+    void allDone();
+
 private:
+
+
 
 
 };

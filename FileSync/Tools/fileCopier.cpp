@@ -4,11 +4,9 @@
 #include <QFileInfoList>
 #include <QFile>
 #include "filereader.h"
+#include <QTime>
 
 #include <QDebug>
-
-#define ORIGIN "C:/Documents/tests/FileSync/CP/FROM/"
-#define DESTINATION "C:/Documents/tests/FileSync/CP/TO/"
 
 fileCopier::fileCopier()
 {
@@ -31,29 +29,32 @@ void fileCopier::copyFromOrigin(QString ogDest, QString newDest)
     }
 
     if(orig.exists() && dest.exists()){
+         QTime timer;
+         timer.start();
 
         for(int i = 0; i < file.size(); i++){
             ogFile+=file.at(i).fileName();
             newFile+=file.at(i).fileName();
 
-//            if()
-
-            qDebug() << ogFile;
-            qDebug() << newFile;
-
             if(QFile(newFile).exists()){
                 if(!reader.areFilesEqual(ogFile,newFile)){
                     QFile::remove(newFile);
+                    emit currentCopy(ogFile, false);
                     QFile::copy(ogFile, newFile);
+                    emit currentCopy(ogFile, true);
                 }
 
             }else{
+                emit currentCopy(ogFile, false);
                 QFile::copy(ogFile, newFile);
+                emit currentCopy(ogFile, true);
             }
-            ogFile = ORIGIN;
-            newFile = DESTINATION;
+            ogFile = ogDest;
+            newFile = newDest;
 
         }
+        qDebug() << "Done- " << timer.elapsed();
+        emit allDone();
 
     }
 }

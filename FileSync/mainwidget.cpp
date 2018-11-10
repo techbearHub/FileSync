@@ -2,6 +2,7 @@
 #include "ui_mainwidget.h"
 #include "Tools/fileCopier.h"
 
+
 #include <QDebug>
 
 #define ORIGIN "C:/Documents/tests/FileSync/CP/FROM/"
@@ -12,6 +13,10 @@ mainWidget::mainWidget(QWidget *parent) :
     ui(new Ui::mainWidget)
 {
     ui->setupUi(this);
+    connect(&read, SIGNAL(currentCopy(QString, bool)), this, SLOT(onCurrentCopy(QString, bool)));
+    connect(&read, SIGNAL(allDone()), this, SLOT(onAllDone()));
+
+
 }
 
 mainWidget::~mainWidget()
@@ -22,7 +27,21 @@ mainWidget::~mainWidget()
 
 void mainWidget::on_btnSync_clicked()
 {
-    fileCopier read;
 //    qDebug() << read.getOrigin() + " " + read.getDestination();
     read.copyFromOrigin(ORIGIN, DESTINATION);
+}
+
+void mainWidget::onCurrentCopy(QString fileBeingCopied, bool done)
+{
+    if(done){
+       ui->lblMessage->setText(fileBeingCopied+" copied");
+    }else{
+        ui->lblMessage->setText("Copying... " + fileBeingCopied);
+    }
+
+}
+
+void mainWidget::onAllDone()
+{
+    ui->lblMessage->setText("Files sync'ed");
 }

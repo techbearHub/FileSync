@@ -2,6 +2,7 @@
 #define MAINWIDGET_H
 
 #include <QMainWindow>
+#include "Tools/fileCopier.h"
 
 namespace Ui {
 class mainWidget;
@@ -18,9 +19,14 @@ public:
 private slots:
 
     void on_btnSync_clicked();
+    void onCurrentCopy(QString fileBeingCopied, bool done);
+    void onAllDone();
 
 private:
     Ui::mainWidget *ui;
+    fileCopier read;
 };
+
+
 
 #endif // MAINWIDGET_H
