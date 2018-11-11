@@ -16,8 +16,8 @@ mainWidget::mainWidget(QWidget *parent) :
     connect(&read, SIGNAL(currentCopy(QString, bool)), this, SLOT(onCurrentCopy(QString, bool)));
     connect(&read, SIGNAL(allDone()), this, SLOT(onAllDone()));
     connect(&read, SIGNAL(timeElapsed(int)), this, SLOT(onTimeElapsed(int)));
-
-
+    ui->editSource->setText(ORIGIN);
+    ui->editDestination->setText(DESTINATION);
 }
 
 mainWidget::~mainWidget()
@@ -28,6 +28,7 @@ mainWidget::~mainWidget()
 
 void mainWidget::on_btnSync_clicked()
 {
+    read.SetDestinations(ui->editSource->text(),ui->editDestination->text());
     read.start();
 }
 
@@ -48,5 +49,5 @@ void mainWidget::onAllDone()
 
 void mainWidget::onTimeElapsed(int time)
 {
-    ui->lblMessage->setText(ui->lblMessage->text() + ", time elapsed- " + QString::number(time/1000));
+    ui->lblMessage->setText(ui->lblMessage->text() + ", time elapsed- " + QString::number(time/1000) + "s");
 }

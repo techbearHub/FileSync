@@ -16,7 +16,7 @@ class fileCopier : public QThread
 public:
     void run() override;
     fileCopier();
-    void copyFromOrigin(QString ogDest, QString ogFile);
+    void SetDestinations(QString original, QString target);
 
 signals:
     void currentCopy(QString current, bool done);
@@ -24,8 +24,10 @@ signals:
     void allDone();
 
 private:
+    void copyFromOrigin();
 
-
+    QString ogDest;
+    QString newDest;
 
 
 };

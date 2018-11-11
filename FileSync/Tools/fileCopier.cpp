@@ -14,8 +14,7 @@
 
 void fileCopier::run()
 {
-
-    copyFromOrigin(ORIGIN, DESTINATION);
+    copyFromOrigin();
 }
 
 fileCopier::fileCopier()
@@ -23,7 +22,7 @@ fileCopier::fileCopier()
 
 }
 
-void fileCopier::copyFromOrigin(QString ogDest, QString newDest)
+void fileCopier::copyFromOrigin()
 {
     QDir orig(ogDest);
     QDir dest(newDest);
@@ -69,6 +68,12 @@ void fileCopier::copyFromOrigin(QString ogDest, QString newDest)
         emit timeElapsed(timer.elapsed());
 
     }
+}
+
+void fileCopier::SetDestinations(QString original, QString target)
+{
+    ogDest = original;
+    newDest = target;
 }
 
 
