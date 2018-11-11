@@ -21,6 +21,7 @@ private slots:
     void on_btnSync_clicked();
     void onCurrentCopy(QString fileBeingCopied, bool done);
     void onAllDone();
+    void onTimeElapsed(int time);
 
 private:
     Ui::mainWidget *ui;

@@ -15,6 +15,7 @@ mainWidget::mainWidget(QWidget *parent) :
     ui->setupUi(this);
     connect(&read, SIGNAL(currentCopy(QString, bool)), this, SLOT(onCurrentCopy(QString, bool)));
     connect(&read, SIGNAL(allDone()), this, SLOT(onAllDone()));
+    connect(&read, SIGNAL(timeElapsed(int)), this, SLOT(onTimeElapsed(int)));
 
 
 }
@@ -27,8 +28,7 @@ mainWidget::~mainWidget()
 
 void mainWidget::on_btnSync_clicked()
 {
-//    qDebug() << read.getOrigin() + " " + read.getDestination();
-    read.copyFromOrigin(ORIGIN, DESTINATION);
+    read.start();
 }
 
 void mainWidget::onCurrentCopy(QString fileBeingCopied, bool done)
@@ -44,4 +44,9 @@ void mainWidget::onCurrentCopy(QString fileBeingCopied, bool done)
 void mainWidget::onAllDone()
 {
     ui->lblMessage->setText("Files sync'ed");
+}
+
+void mainWidget::onTimeElapsed(int time)
+{
+    ui->lblMessage->setText(ui->lblMessage->text() + ", time elapsed- " + QString::number(time/1000));
 }

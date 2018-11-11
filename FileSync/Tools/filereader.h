@@ -16,10 +16,10 @@ public slots:
 
 
 public:
-    bool areFilesEqual(QString origin, QString newCopy);
+    static bool areFilesEqual(QString origin, QString newCopy);
 
 private:
-    QByteArray getFileHash(QString filePath);
+    static QByteArray getFileHash(QString filePath);
 
 };
 
