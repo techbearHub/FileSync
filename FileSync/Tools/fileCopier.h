@@ -24,7 +24,7 @@ signals:
     void allDone();
 
 private:
-    void copyFromOrigin();
+    void copyFromOrigin(QString source, QString destination);
 
     QString ogDest;
     QString newDest;

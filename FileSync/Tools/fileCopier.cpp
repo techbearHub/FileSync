@@ -14,7 +14,7 @@
 
 void fileCopier::run()
 {
-    copyFromOrigin();
+    copyFromOrigin(ogDest,newDest);
 }
 
 fileCopier::fileCopier()
@@ -22,17 +22,19 @@ fileCopier::fileCopier()
 
 }
 
-void fileCopier::copyFromOrigin()
+void fileCopier::copyFromOrigin(QString source, QString destination)
 {
-    QDir orig(ogDest);
-    QDir dest(newDest);
+    QDir orig(source);
+    QDir dest(destination);
     QFile fileOper;
 
 
-    QString ogFile = ogDest;
-    QString newFile = newDest;
+    QString ogFile = source;
+    QString newFile = destination;
+    qDebug() << source << ", " << destination;
 
     QFileInfoList file = orig.entryInfoList();
+
     if(!dest.exists()){
         dest.mkdir(dest.path());
     }
@@ -43,29 +45,35 @@ void fileCopier::copyFromOrigin()
          timer.start();
 
         for(int i = 0; i < file.size(); i++){
-            ogFile+=file.at(i).fileName();
-            newFile+=file.at(i).fileName();
+            qDebug() << file.at(i).fileName();
 
-            if(QFile(newFile).exists()){
-                if(!fileReader::areFilesEqual(ogFile,newFile)){
-                    QFile::remove(newFile);
+            if(!file.at(i).fileName().contains(".")){
+                copyFromOrigin(source+file.at(i).fileName() + "/",destination+file.at(i).fileName()+"/");
+            }else{
+                ogFile+=file.at(i).fileName();
+                newFile+=file.at(i).fileName();
+
+                if(QFile(newFile).exists()){
+                    if(!fileReader::areFilesEqual(ogFile,newFile)){
+                        QFile::remove(newFile);
+                        emit currentCopy(ogFile, false);
+                        QFile::copy(ogFile, newFile);
+                        emit currentCopy(ogFile, true);
+                    }
+
+                }else{
                     emit currentCopy(ogFile, false);
                     QFile::copy(ogFile, newFile);
                     emit currentCopy(ogFile, true);
                 }
+                ogFile = ogDest;
+                newFile = destination;
 
-            }else{
-                emit currentCopy(ogFile, false);
-                QFile::copy(ogFile, newFile);
-                emit currentCopy(ogFile, true);
             }
-            ogFile = ogDest;
-            newFile = newDest;
 
-        }
-
-        emit allDone();
-        emit timeElapsed(timer.elapsed());
+            emit allDone();
+            emit timeElapsed(timer.elapsed());
+            }
 
     }
 }
