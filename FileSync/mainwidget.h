@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "Tools/fileCopier.h"
+#include <QFileSystemWatcher>
 
 namespace Ui {
 class mainWidget;
@@ -22,10 +23,14 @@ private slots:
     void onCurrentCopy(QString fileBeingCopied, bool done);
     void onAllDone();
     void onTimeElapsed(int time);
+    void showModified(QString mod);
 
 private:
     Ui::mainWidget *ui;
     fileCopier read;
+    QFileSystemWatcher watcher;
+
+    void initWatcher();
 };
 
 

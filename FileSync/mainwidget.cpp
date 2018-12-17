@@ -18,6 +18,9 @@ mainWidget::mainWidget(QWidget *parent) :
     connect(&read, SIGNAL(timeElapsed(int)), this, SLOT(onTimeElapsed(int)));
     ui->editSource->setText(ORIGIN);
     ui->editDestination->setText(DESTINATION);
+    initWatcher();
+
+
 }
 
 mainWidget::~mainWidget()
@@ -50,4 +53,15 @@ void mainWidget::onAllDone()
 void mainWidget::onTimeElapsed(int time)
 {
     ui->lblMessage->setText(ui->lblMessage->text() + ", time elapsed- " + QString::number(time/1000) + "s");
+}
+
+void mainWidget::showModified(QString mod)
+{
+    qDebug() << "watcher fires!";
+}
+
+void mainWidget::initWatcher()
+{
+    watcher.addPath(ui->editSource->text());
+    QObject::connect(&watcher, SIGNAL(directoryChanged(QString)), this, SLOT(showModified(QString)));
 }
