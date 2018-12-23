@@ -29,13 +29,15 @@ SOURCES += \
     mainwidget.cpp \
     Tools/fileCopier.cpp \
     Tools/filereader.cpp \
-    Widgets/topmenu.cpp
+    Widgets/topmenu.cpp \
+    Tools/logger.cpp
 
 HEADERS += \
         mainwidget.h \
     Tools/fileCopier.h \
     Tools/filereader.h \
-    Widgets/topmenu.h
+    Widgets/topmenu.h \
+    Tools/logger.h
 
 FORMS += \
         mainwidget.ui \
