@@ -38,6 +38,7 @@ void mainWidget::on_btnSync_clicked()
 {
     Logger log;
     log.WriteLog("Sync started");
+     ui->lblMessage->setText("Checking for changes...");
     copy();
 }
 
@@ -79,7 +80,7 @@ void mainWidget::showModified(QString mod)
     Logger log;
     log.WriteLog("Changes to root- start sync");
     copy();
-    //no sbufolders yet :(
+    //no subfolders yet :(
 }
 
 void mainWidget::initWatcher()

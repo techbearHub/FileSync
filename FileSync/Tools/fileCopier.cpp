@@ -71,9 +71,11 @@ void fileCopier::copyFromOrigin(QString source, QString destination)
 
             }
 
-            emit allDone();
-            emit timeElapsed(timer.elapsed());
+
+
             }
+        emit allDone();
+        emit timeElapsed(timer.elapsed());
 
     }
 }
