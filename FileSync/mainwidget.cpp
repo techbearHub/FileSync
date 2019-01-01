@@ -2,6 +2,7 @@
 #include "ui_mainwidget.h"
 #include "Tools/fileCopier.h"
 #include "Tools/logger.h"
+#include <QAction>
 
 
 #include <QDebug>
@@ -20,6 +21,7 @@ mainWidget::mainWidget(QWidget *parent) :
     ui->editSource->setText(ORIGIN);
     ui->editDestination->setText(DESTINATION);
     initWatcher();
+    createTrayIcon();
 
 
     globalTimer.start(3600000); //1 hour
@@ -93,6 +95,49 @@ void mainWidget::copy()
 {
     read.SetDestinations(ui->editSource->text(),ui->editDestination->text());
     read.start();
+}
+
+void mainWidget::createTrayIcon()
+{
+    //TODO icon being created, fix this :(
+    m_tray_icon.setIcon(QIcon("Images/images.qrc/icon.png"));
+
+//    connect(&m_tray_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(onShowHide(QSystemTrayIcon::ActivationReason)) );
+
+//    QAction *quit_action = new QAction( "Exit", &m_tray_icon );
+//    connect( quit_action, SIGNAL(triggered()), this, SLOT(on_exit()) );
+
+//    QAction *hide_action = new QAction( "Show/Hide", &m_tray_icon );
+//    connect( hide_action, SIGNAL(triggered()), this, SLOT(onShowHide(QSystemTrayIcon::ActivationReason)) );
+
+    QMenu *tray_icon_menu = new QMenu;
+//    tray_icon_menu->addAction( hide_action );
+//    tray_icon_menu->addAction( quit_action );
+
+    m_tray_icon.setContextMenu( tray_icon_menu );
+
+    m_tray_icon.show();
+
+}
+
+void mainWidget::onShowHide( QSystemTrayIcon::ActivationReason reason )
+{
+    if( reason )
+    {
+        if( reason != QSystemTrayIcon::DoubleClick )
+        return;
+    }
+
+    if( isVisible() )
+    {
+        hide();
+    }
+    else
+    {
+        show();
+        raise();
+        setFocus();
+    }
 }
 
 

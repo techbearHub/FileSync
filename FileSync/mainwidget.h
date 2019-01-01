@@ -5,6 +5,7 @@
 #include "Tools/fileCopier.h"
 #include <QFileSystemWatcher>
 #include <QTimer>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class mainWidget;
@@ -26,15 +27,21 @@ private slots:
     void onTimeElapsed(int time);
     void showModified(QString mod);
     void startAutoSync();
+public slots:
+
+    void onShowHide(QSystemTrayIcon::ActivationReason reason);
 
 private:
     Ui::mainWidget *ui;
     fileCopier read;
     QFileSystemWatcher watcher;
     QTimer globalTimer;
+    QSystemTrayIcon m_tray_icon ;
 
     void initWatcher();
     void copy();
+    void createTrayIcon();
+
 
 };
 

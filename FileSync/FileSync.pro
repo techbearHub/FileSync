@@ -50,3 +50,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 SUBDIRS += \
     FileSync.pro
+
+DISTFILES += \
+    Images/icon.png
+
+RESOURCES += \
+    Images/images.qrc
